@@ -61,9 +61,10 @@ for file in latestEMLs:
         if current is not None:
             if current.text.strip() in mapping:
                 # Write the new value in the file (uncomment the next 2 lines for it)
-                print "New:",mapping[current.text.strip()]
+                #print "New:",mapping[current.text.strip()]
                 #current.text = mapping[current.text.strip()]
                 #parsed.write( file )
+                pass
             else:
                 print "WARNING: ############# Not found #"+current.text+"# ###########"
             valuesFound.append( current.text )
@@ -72,4 +73,6 @@ for file in latestEMLs:
 
 uniqueValuesFound = set( valuesFound )
    
-print "There are",len(uniqueValuesFound),"unique values in the",len(valuesFound),"values found."
+print "There are",len(uniqueValuesFound),"unique values in the",len(valuesFound),"values found:"
+for value in uniqueValuesFound:
+    print " +",value
