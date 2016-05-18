@@ -4,9 +4,8 @@
     License: GNU GPL v.2.0
     
     Script to query all values of a specific EML element in all Ceiba resources. 
-    The script can optionally overwrite values from a mapping given as csv.
-    We used it at IAVH to enforce the intellectualRights element to have only
-      4 values.      
+    The script can optionally overwrite values from a mapping given as csv. In 
+      this case, it would only overwrite the latest EML.         
 """
 import os, glob
 import xml.etree.ElementTree
@@ -61,7 +60,7 @@ for file in latestEMLs:
         current = parsed.find( xpath )
         if current is not None:
             if current.text.strip() in mapping:
-                # Write the new value in the file
+                # Write the new value in the file (uncomment the next 2 lines for it)
                 print "New:",mapping[current.text.strip()]
                 #current.text = mapping[current.text.strip()]
                 #parsed.write( file )
