@@ -36,13 +36,14 @@ def getElementValue( file, xpath ):
     else:
         current = parsed.find( xpath )
         if current is not None:
-            if current.text.strip() in mapping:
-                return mapping[current.text.strip()]
+            normalized = current.text.strip().replace("\n", " ")
+            if normalized in mapping:
+                return mapping[normalized]
             else: 
-                print "WARNING: Value",current.text,"not found in mapping."
+                print "WARNING: Value",normalized,"not found in mapping.",file
                 return None
         else:
-            print "WARNING: Couldn't find value in",file
+            print "WARNING: Couldn't find XML element in",file
             return None 
 
 
@@ -58,7 +59,8 @@ def updateEML( file, xpath, value ):
             current.text = value
             parsed.write( file )
         else:
-            print "WARNING: Couldn't find value in",file
+            #print "WARNING: Couldn't find XML element in",file
+            pass
 
 
 
