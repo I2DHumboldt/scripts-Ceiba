@@ -7,7 +7,7 @@
 import os, glob
 import script_parse_eml
 
-basePath = '/docs/tr/iavh/Ceiba/demo_datadir/resources/'
+basePath = '/docs/tr/iavh/Ceiba/demo_datadir_/resources/'
 outPath = '/docs/tr/iavh/Ceiba/search/emlJSONs/'
 statusFilePath = '/docs/tr/iavh/Ceiba/search/scripts/estado_recursos_ceiba.txt'
 os.chdir( basePath )

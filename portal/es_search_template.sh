@@ -5,14 +5,24 @@
 curl -XPOST http://localhost:9200/_search/template/dsl -d '
 {
     "template": {
-        "size": "{{size}}",
-        "from": "{{from}}",
-        "query": {
-          "query_string": {
-            "query": "{{query}}"
-          }
-        },   
-        "_source": ["resource.title", "resource.abstract"]
+      "size": "{{size}}",
+      "from": "{{from}}",
+      "query": { 
+        "bool": { 
+          "must": [
+            { "match_phrase": { 
+               "_all": {
+                   "query":   "{{query}}",
+                   "analyzer": "default"
+               }
+             }}
+          ],
+          "filter": [ 
+            { "term":  { "status": "PUBLIC" }}
+          ]
+        }
+      },
+      "_source": ["title", "abstract"]
     }
 }
 ' 

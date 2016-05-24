@@ -60,6 +60,10 @@ curl -XPUT http://localhost:9200/ceiba -d '
                 "projectTitle": {
                     "type": "string"
                 },
+                "status": {
+                    "type":  "string",
+                    "index": "not_analyzed"
+                },
                 "studyExtent": {
                     "type": "string"
                 },

@@ -2,6 +2,7 @@
     Copyright (c) 2016, German Carrillo (gcarrillo@linuxmail.org) for IAvH
     License: GNU GPL v.2.0
 """
+import os.path
 import xml.etree.ElementTree, json
 
 typeTranslation = {"occurrence":u"Registro biol\u00f3gico", 
@@ -166,11 +167,27 @@ def generateJSONForEML( myFile, outPath, idResource ):
         if collectionIdentifier is not None:
             emlJson["collectionIdentifier"] = [ e.strip() for e in collectionIdentifier.text.split(",") ]
 
-    resource = {"resource": emlJson}
+
+    # Get status from resources.xml
+    resourceFile = os.path.dirname( myFile )
+    resourceFile = os.path.join( resourceFile, 'resource.xml' )
+    try:
+        parsed = xml.etree.ElementTree.parse( resourceFile )
+    except xml.etree.ElementTree.ParseError:
+        print "WARNING: El archivo", resourceFile, "tiene problemas!!!"
+        emlJson["status"] = "UNKNOWN"
+    else:
+        status = parsed.find('./status')
+        if status is not None:
+            emlJson["status"] = status.text
+        else: 
+            emlJson["status"] = "UNKNOWN"
+            print "status is none"
+
 
     #Save to file
     f = open(outPath + emlJson["id"] + ".json", "wt") 
-    f.write(json.dumps(resource,ensure_ascii=False,sort_keys=True,indent=3).encode('utf-8'))
+    f.write(json.dumps(emlJson, ensure_ascii=False, sort_keys=True, indent=3).encode('utf-8'))
     f.close()
     
     return True
