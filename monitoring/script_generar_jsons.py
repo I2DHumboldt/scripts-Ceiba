@@ -9,10 +9,7 @@ import script_parse_eml
 
 basePath = '/docs/tr/iavh/Ceiba/demo_datadir_/resources/'
 outPath = '/docs/tr/iavh/Ceiba/search/emlJSONs/'
-statusFilePath = '/docs/tr/iavh/Ceiba/search/scripts/estado_recursos_ceiba.txt'
 os.chdir( basePath )
-
-logText = ""
 
 for folder in glob.glob( '**/' ):
     os.chdir( basePath + folder )
@@ -31,11 +28,7 @@ for folder in glob.glob( '**/' ):
 
     if latestEML:
         script_parse_eml.generateJSONForEML( basePath + folder + latestEML, outPath, folder[:-1] )
-        logText += folder[:-1] + "," + latestEML + "\n"
     else:
         print "**************************** PILAS ************************"
     
-    if logText:
-        with open(statusFilePath, 'wb') as f:
-            f.write( logText )
     
